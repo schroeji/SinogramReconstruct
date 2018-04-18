@@ -24,7 +24,7 @@ def show_progress(progress):
 
 
 def no_filter(ffts):
-    f = np.array([0.0] + [1/360.]*(ffts.shape[1] - 1))
+    f = np.array([0.0] + [1./ffts.shape[0]]*(ffts.shape[1] - 1))
     return ffts * f
 
 
@@ -33,8 +33,8 @@ def ramp_filter(ffts):
     Ramp filter a 2-d array of 1-d FFTs (1-d FFTs along the rows).
     ffts: result of the fourier transform
     """
-    # ramp = np.floor(np.arange(0.5, ffts.shape[1]//2 + 0.1, 0.5))
     ramp = np.abs(np.fft.fftfreq(int(ffts.shape[1])))
+    # ramp = np.floor(np.arange(0.5, ffts.shape[1]//2 + 0.1, 0.5))
     return ffts * ramp
 
 
@@ -44,11 +44,7 @@ def hamming_windowed_ramp_filter(ffts):
     ffts: result of the fourier transform
     """
     ramp = np.abs(np.fft.fftfreq(int(ffts.shape[1])))
-    # m = len(ramp) // 2
-    # for i in range(1, len(ramp)):
-        # ramp[i] *= (0.54 + 0.46 * np.cos(np.pi * (i - m) / m ))
     ramp[1:] = ramp[1:] * (0.54 + 0.46 * np.cos(ramp[1:]))
-    # print(ramp)
     return ffts * ramp
 
 
