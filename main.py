@@ -34,7 +34,6 @@ def ramp_filter(ffts):
     ffts: result of the fourier transform
     """
     ramp = np.abs(np.fft.fftfreq(int(ffts.shape[1])))
-    # ramp = np.floor(np.arange(0.5, ffts.shape[1]//2 + 0.1, 0.5))
     return ffts * ramp
 
 
